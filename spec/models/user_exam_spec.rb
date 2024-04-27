@@ -6,7 +6,8 @@ RSpec.describe UserExam, type: :model do
       user = create(:user)
       college = create(:college)
       exam = create(:exam, college_id: college.id)
-      exam_window = create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT, end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
+      create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT,
+                           end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
       user_exam = build(:user_exam, college_id: college.id, exam_id: exam.id, user_id: user.id,
                                     start_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.day).strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -22,7 +23,8 @@ RSpec.describe UserExam, type: :model do
       user = create(:user)
       college = create(:college)
       exam = create(:exam, college_id: college.id)
-      exam_window = create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT, end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
+      create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT,
+                           end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
       user_exam = create(:user_exam, college_id: college.id, exam_id: exam.id, user_id: user.id,
                                      start_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.day).strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -39,7 +41,8 @@ RSpec.describe UserExam, type: :model do
       it 'should invalidate for null value' do
         college = create(:college)
         exam = create(:exam, college_id: college.id)
-        exam_window = create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT, end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
+        create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT,
+                             end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
         user_exam = build(:user_exam, :user_exam_missing_user_id, college_id: college.id, exam_id: exam.id,
                                                                   start_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.day).strftime('%Y-%m-%d %H:%M:%S'))
         user_exam.valid?
@@ -66,7 +69,8 @@ RSpec.describe UserExam, type: :model do
         user = create(:user)
         college = create(:college)
         exam = create(:exam, college_id: college.id)
-        exam_window = create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT, end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
+        create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT,
+                             end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
         user_exam = build(:user_exam, :user_exam_missing_college_id, exam_id: exam.id, user_id: user.id,
                                                                      start_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.day).strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -81,7 +85,8 @@ RSpec.describe UserExam, type: :model do
         user = create(:user)
         college = create(:college)
         exam = create(:exam, college_id: college.id)
-        exam_window = create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT, end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
+        create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT,
+                             end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
         user_exam = build(:user_exam, :user_exam_missing_start_time, college_id: college.id, exam_id: exam.id,
                                                                      user_id: user.id)
 
@@ -95,26 +100,28 @@ RSpec.describe UserExam, type: :model do
         college = create(:college)
         exam = create(:exam, college_id: college.id)
         college = create(:college, title: 'MIT')
-        exam_window = create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT, end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
+        create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT,
+                             end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
         user_exam = build(:user_exam, college_id: college.id, exam_id: exam.id, user_id: user.id,
                                       start_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.day).strftime('%Y-%m-%d %H:%M:%S'))
-        
+
         user_exam.valid?
 
-        expect(user_exam.errors[:college]).to include("Wrong college selected")
+        expect(user_exam.errors[:college]).to include('Wrong college selected')
       end
 
       it 'should invalidate if start_time is not in the exam window' do
         user = create(:user)
         college = create(:college)
         exam = create(:exam, college_id: college.id)
-        exam_window = create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT, end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
+        create(:exam_window, exam_id: exam.id, start_time: DATE_TIME_FORMAT,
+                             end_time: (DateTime.parse(DATE_TIME_FORMAT) + 1.week).strftime('%Y-%m-%d %H:%M:%S'))
         user_exam = build(:user_exam, college_id: college.id, exam_id: exam.id, user_id: user.id,
                                       start_time: (DateTime.parse(DATE_TIME_FORMAT) - 1.day).strftime('%Y-%m-%d %H:%M:%S'))
-        
+
         user_exam.valid?
 
-        expect(user_exam.errors[:start_time]).to include("must be within the exam window")
+        expect(user_exam.errors[:start_time]).to include('must be within the exam window')
       end
     end
   end
