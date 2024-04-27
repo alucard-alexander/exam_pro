@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_27_121709) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_27_191818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_requests", force: :cascade do |t|
+    t.text "url"
+    t.integer "request_verb"
+    t.json "request_body"
+    t.integer "response_status"
+    t.json "response_body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "colleges", force: :cascade do |t|
     t.string "title"

@@ -3,12 +3,19 @@ class Api::V1::UserExamsController < ApplicationController
     user = User.find_by(phone_number: params[:phone_number])
     if user.nil?
       user = User.new(user_params)
-      return render json: user.errors, status: 400 unless user.save
+      unless user.save
+        ApiRequest.request_log_create(request.original_url, request.method, request.params, 400, user.errors)
+        return render json: user.errors, status: 400
+      end
     end
 
     user_exam = user.user_exams.new(user_exam_params)
-    return render json: { user_exam: }, status: 200 if user_exam.save
+    if user_exam.save
+      ApiRequest.request_log_create(request.original_url, request.method, request.params, 200, { user_exam: })
+      return render json: { user_exam: }, status: 200
+    end
 
+    ApiRequest.request_log_create(request.original_url, request.method, request.params, 400, user.errors)
     render json: user_exam.errors, status: 400
   end
 
