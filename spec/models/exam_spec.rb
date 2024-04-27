@@ -72,7 +72,33 @@ RSpec.describe Exam, type: :model do
         exam = build(:exam, :missing_college_id)
         exam.valid?
 
-        expect(exam.errors[:college]).to include("must exist")
+        expect(exam.errors[:college]).to include('must exist')
+      end
+    end
+  end
+
+  context '#Associations' do
+
+    describe '#exam' do
+
+      it 'should belongs to college' do
+        association = described_class.reflect_on_association(:college)
+        expect(association.macro).to eq(:belongs_to)
+      end
+
+      it 'should have has_many exam_windows' do
+        association = described_class.reflect_on_association(:exam_windows)
+        expect(association.macro).to eq(:has_many)
+      end
+
+      it 'should have has_many user_exams' do
+        association = described_class.reflect_on_association(:user_exams)
+        expect(association.macro).to eq(:has_many)
+      end
+
+      it 'should have has_many users through user_exams' do
+        association = described_class.reflect_on_association(:users)
+        expect(association.options[:through]).to eq(:user_exams)
       end
     end
   end

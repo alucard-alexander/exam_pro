@@ -2,8 +2,8 @@ FactoryBot.define do
   sequence(:exam_title) { |n| "Computer Science#{n}" }
   factory :exam_window do
     exam_id { create(:exam, title: generate(:exam_title)).id }
-    start_time { '2024-04-27 15:58:14' }
-    end_time { (DateTime.parse('2024-04-27 15:58:14') + 1.hour).to_s }
+    start_time { DATE_TIME_FORMAT }
+    end_time { (DateTime.parse(DATE_TIME_FORMAT) + 1.hour).strftime('%Y-%m-%d %H:%M:%S') }
   end
 
   # START TIME
@@ -41,6 +41,6 @@ FactoryBot.define do
   # end
 
   trait :end_time_lesser_than_start_time do
-    end_time { (DateTime.parse('2024-04-27 15:58:14') - 1.week).to_s }
+    end_time { (DateTime.parse(DATE_TIME_FORMAT) - 1.week).strftime('%Y-%m-%d %H:%M:%S') }
   end
 end

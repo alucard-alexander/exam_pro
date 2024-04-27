@@ -65,4 +65,13 @@ RSpec.describe College, type: :model do
       end
     end
   end
+
+  context '#Associations' do
+    describe '#college' do
+      it 'should have has_many exam_windows' do
+        association = described_class.reflect_on_association(:exams)
+        expect(association.macro).to eq(:has_many)
+      end
+    end
+  end
 end

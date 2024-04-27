@@ -5,8 +5,8 @@ RSpec.describe ExamWindow, type: :model do
     it 'should initialize a exam_window with valid attributes' do
       exam = create(:exam)
       exam_window = build(:exam_window, exam_id: exam.id)
-      expect(exam_window.start_time).to eq(DateTime.parse('2024-04-27 15:58:14'))
-      expect(exam_window.end_time).to eq(DateTime.parse('2024-04-27 15:58:14') + 1.hour)
+      expect(exam_window.start_time).to eq(DateTime.parse(DATE_TIME_FORMAT))
+      expect(exam_window.end_time).to eq(DateTime.parse(DATE_TIME_FORMAT) + 1.hour)
       expect(exam_window.exam.id).to eq(exam.id)
       expect(exam_window.exam.title).to eq(exam.title)
     end
@@ -18,8 +18,8 @@ RSpec.describe ExamWindow, type: :model do
       exam_window = build(:exam_window, exam_id: exam.id)
       exam_window.save
       expect(exam_window.id).not_to be_nil
-      expect(exam_window.start_time).to eq(DateTime.parse('2024-04-27 15:58:14'))
-      expect(exam_window.end_time).to eq(DateTime.parse('2024-04-27 15:58:14') + 1.hour)
+      expect(exam_window.start_time).to eq(DateTime.parse(DATE_TIME_FORMAT))
+      expect(exam_window.end_time).to eq(DateTime.parse(DATE_TIME_FORMAT) + 1.hour)
       expect(exam_window.exam.id).to eq(exam.id)
       expect(exam_window.exam.title).to eq(exam.title)
     end
@@ -94,6 +94,16 @@ RSpec.describe ExamWindow, type: :model do
     end
 
     describe 'exam' do
+    end
+  end
+
+  context '#Associations' do
+    describe '#exam_window' do
+
+    it 'should belongs to college' do
+      association = described_class.reflect_on_association(:exam)
+      expect(association.macro).to eq(:belongs_to)
+    end
     end
   end
 end

@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  # ASSOCIATIONS
+  has_many :user_exams
+  has_many :exams, through: :user_exams
+
   # VALIDATIONS
   validates :first_name, presence: true, length: { minimum: 2 },
                          format: { with: /\A[a-zA-Z]*\z/, message: 'must contain only alphabets' }

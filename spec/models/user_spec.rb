@@ -128,4 +128,18 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  context '#Associations' do
+    describe '#user' do
+      it 'should have has many exams' do
+        association = described_class.reflect_on_association(:exams)
+        expect(association.macro).to eq(:has_many)
+      end
+
+      it 'should have has many exams through user_exams' do
+        association = described_class.reflect_on_association(:exams)
+        expect(association.options[:through]).to eq(:user_exams)
+      end
+    end
+  end
 end
