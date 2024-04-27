@@ -9,6 +9,7 @@ The following steps walk through getting the application running. Before you sta
 2. [Install and set up the environment](#2-install-and-set-up-the-environment)
 3. [Run the tests](#3-run-the-tests)
 4. [Start the app](#4-start-the-app)
+5. [Api Docs](#5-api-docs)
 
 ### 1. Clone the project
 
@@ -173,4 +174,30 @@ Rails 6.0.1 application starting in development on http://localhost:3000
 
 You can stop the server when you're finished by typing `Ctrl + C`.
 
+### 5. Api Docs
 
+#### Create user exams
+
+##### End Point
+```http
+GET /api/v1/user_exams/create
+```
+
+##### Request body example
+```
+{
+    "first_name": "Test"
+    "last_name": "Test",
+    "phone_number": "1234506789",
+    "college_id": 3,
+    "exam_id": 3,
+    "start_time": "2024-04-28 17:47:09"
+}
+```
+
+##### Response status code
+| Status Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+| 400 | `Invalid Data` |
+| 500 | `Internal Server Error` |
