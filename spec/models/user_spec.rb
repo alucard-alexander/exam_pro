@@ -114,10 +114,17 @@ RSpec.describe User, type: :model do
       end
 
       it 'should invalidate exceeds 10 characters string' do
-        user = FactoryBot.build(:user, :invalid_phone_number_for_11_characters)
+        user = build(:user, :invalid_phone_number_for_11_characters)
         user.valid?
 
         expect(user.errors[:phone_number]).to include('is too long (maximum is 10 characters)')
+      end
+
+      it 'should validate if it already exists(Unique)' do
+        user = create(:user)
+        user = build(:user)
+        user.valid?
+        expect(user.errors[:phone_number]).to include('has already been taken')
       end
     end
   end

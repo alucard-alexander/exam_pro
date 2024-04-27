@@ -58,8 +58,7 @@ RSpec.describe College, type: :model do
       end
 
       it 'should validate if it already exists(Unique)' do
-        college = build(:college)
-        college.save
+        college = create(:college)
         college = build(:college)
         college.valid?
         expect(college.errors[:title]).to include('has already been taken')

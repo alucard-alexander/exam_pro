@@ -3,7 +3,7 @@ FactoryBot.define do
     title { 'Harvard University' }
   end
 
-  # FIRST NAME
+  # TITLE
   trait :missing_title do
     title {}
   end
